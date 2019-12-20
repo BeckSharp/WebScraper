@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.StartCodeButton = new System.Windows.Forms.Button();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // StartCodeButton
@@ -41,20 +41,20 @@
             this.StartCodeButton.Text = "Start";
             this.StartCodeButton.UseVisualStyleBackColor = true;
             // 
-            // richTextBox1
+            // richTextBox
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(23, 39);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(896, 612);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
+            this.richTextBox.Location = new System.Drawing.Point(23, 39);
+            this.richTextBox.Name = "richTextBox";
+            this.richTextBox.Size = new System.Drawing.Size(896, 612);
+            this.richTextBox.TabIndex = 1;
+            this.richTextBox.Text = "";
             // 
             // WebScrapeDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(942, 801);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.richTextBox);
             this.Controls.Add(this.StartCodeButton);
             this.Name = "WebScrapeDisplay";
             this.Style = MetroFramework.MetroColorStyle.Blue;
@@ -68,7 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Button StartCodeButton;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox richTextBox;
     }
 }
 
