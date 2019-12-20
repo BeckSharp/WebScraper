@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Web_Scraper
 {
-    public partial class Form1 : Form
+    public partial class WebScrapeDisplay : MetroFramework.Forms.MetroForm
     {
-        public Form1()
+        public WebScrapeDisplay()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
