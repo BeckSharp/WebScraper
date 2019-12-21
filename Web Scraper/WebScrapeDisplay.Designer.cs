@@ -40,6 +40,7 @@
             this.StartCodeButton.TabIndex = 0;
             this.StartCodeButton.Text = "Start";
             this.StartCodeButton.UseVisualStyleBackColor = true;
+            this.StartCodeButton.Click += new System.EventHandler(this.StartCodeButton_Click);
             // 
             // richTextBox
             // 

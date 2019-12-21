@@ -21,20 +21,25 @@ namespace Web_Scraper
 {
     public partial class WebScrapeDisplay : MetroFramework.Forms.MetroForm
     {
-        //Query terms.
-        private string Title { get; set; }
-        private string Url { get; set; }
-        private string siteUrl = "https://www.oceannetworks.ca/news/stories";
-        public string[] QueryTerms { get; } = { "Ocean", "Nature", "Pollution" };
-
         public WebScrapeDisplay()
         {
             InitializeComponent();
         }
 
+        //Query terms.
+        private string Title { get; set; }
+        private string Url { get; set; }
+        private readonly string siteUrl = "https://www.oceannetworks.ca/news/stories";
+        public string[] QueryTerms { get; } = { "Ocean", "Nature", "Pollution" };
+
         private void Form1_Load(object sender, EventArgs e)
         {
+        }
 
+        //Starting scraping when the button is clicked by the user.
+        private void StartCodeButton_Click(object sender, EventArgs e)
+        {
+            ScrapeWebsite();
         }
 
         //Method setting up document to scrape.
@@ -57,25 +62,58 @@ namespace Web_Scraper
             //AngleSharp Classes that build and parse documents from website HTML content.
             HtmlParser parser = new HtmlParser();
             IHtmlDocument document = parser.ParseDocument(response);
+
+            GetScrapeResults(document);
         }
 
-        //Methodto get and recieve results from AngleSharp document.
+        //Receiving results from AngleSharp document and looking for specific terms in the html code.
         private void GetScrapeResults(IHtmlDocument document)
         {
-            IEnumerable<IElement> articleLink;
+            IEnumerable<IElement> articleLink = null;
 
-            //Looping through each query term and parsing the document to find all instances where the class name is "views-field views-field-nothing" & where the ParentElement.InnerHtml contains the query we are looking for.
+            //Looping through each query term and parsing the document to find all instances where the class name is "views-field views-field-nothing" & where the ParentElement.InnerHtml contains the query being searched for.
             foreach (var term in QueryTerms)
             {
                 articleLink = document.All.Where(x => x.ClassName == "views-field views-field-nothing" && (x.ParentElement.InnerHtml.Contains(term) || x.ParentElement.InnerHtml.Contains(term.ToLower())));
-            }
 
-            /*
-            if (articleLink.Any())
-            {
-                //Print results.
-            }
-            */
+                if (articleLink.Any())
+                {
+                    PrintResults(articleLink);
+                }
+            }            
         }
+
+        //Cleaning up results and appending to rich text box.
+        public void PrintResults(IEnumerable<IElement> articleLink)
+        {
+            foreach (var element in articleLink)
+            {
+                CleanResults(element);
+
+                richTextBox.AppendText($"{Title} - {Url}{Environment.NewLine}");
+            }
+        }
+
+        //Replacing html code with place markers, and makes text look presentable.
+        private void CleanResults(IElement result)
+        {
+            //Retrieving link from html code.
+            string htmlResult = result.InnerHtml.ReplaceFirst("        <span class=\"field-content\"><div><a href=\"", "https://www.oceannetworks.ca");
+            htmlResult = htmlResult.ReplaceFirst("\">", "*");
+            //Retrieving title from html code.
+            htmlResult = htmlResult.ReplaceFirst("</a></div>\n<div class=\"article-title-top\">", "-");
+            htmlResult = htmlResult.ReplaceFirst("</div>\n<hr></span>  ", "");
+
+            SplitResults(htmlResult);
+        }
+
+        //Splitting htmlResult into 2 pieces of data using the '*' placeholdedr from CleanResults().
+        private void SplitResults(string htmlResult)
+        {
+            string[] splitResults = htmlResult.Split('*');
+            Url = splitResults[0];
+            Title = splitResults[1];
+        }
+
     }
 }
