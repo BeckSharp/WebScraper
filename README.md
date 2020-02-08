@@ -29,7 +29,7 @@ ____
 
      GetScrapeResults(document);
 	```
-	A token is provided if a cancellation is requested by a task or thread. Then an instance of a HttpClient is created, so it can be used as a base for sending and recieving responses. Then a response message is created for a request that includes the request's status code and data.  If a cancellation is requested, the exception is thrown. Then for the 7th & 8th lines of code, AngleSharp classes are used to create/build and parse documents from the website's HTML content.
+	A token is provided if a cancellation is requested by a task or thread. Then an instance of a HttpClient is created, so it can be used as a base for sending and recieving responses. A http request is then made via the client to search for the URL, then after this a http response  is recieved from the client.  If a cancellation is requested, the exception is thrown. Then for the 7th & 8th lines of code, AngleSharp classes are used to create/build and parse documents from the website's HTML content.
 
 * __private void GetScrapeResults(IHtmlDocument document):__
 	```
